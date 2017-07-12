@@ -1,0 +1,2 @@
+     HNSEP     HTSEP     HNPED     HTPED      NSEP      TSEP      NPED      TPED
+  .173E+00  .109E+01  .722E+00  .647E+00  .174E+20  .120E+03  .431E+20  .448E+03
