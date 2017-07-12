@@ -1,0 +1,128 @@
+c	particle fluxes of ions & impurities
+c 	thetint = 0.5
+c	DENS(N) = thetint*YNI(N+1,1) + (1.-thetint)*YNI(N,1)
+	delma = delna
+	radminor = aminor*sqrt(0.5*(1+elong**2))
+	radius_int = rhor(n)*radminor
+c     Integrate to gamion(1,1) w/o IOL to define BC for gammahat
+c**********Differential slab particle fluxes************************
+c	GAMION(N,1) = GAMION(N+1,1)
+c	1              -dens(n)*xnuionb(n)*delma	
+c     2			-DENS(N)*XNUIONI(N)*DELMA
+c     3            *(1.+fracz*zbar2(n))
+c	gamion(n,2) = 0.03*gamion(n,1)*(1-cforbl(n))
+c	GAMION(N,2) = GAMION(N+1,2)
+c     1		- DENS(N)*XNUIONb(N)*DELMA*(1.+fracz*zbar2(n))
+c**********Differential cylindrical particle fluxes******************
+	GAMION(N,1) = GAMION(N+1,1)*(1.+delma/radius_int)
+	1              -dens(n)*xnuionb(n)*delma	
+     2			-DENS(N)*XNUIONI(N)*DELMA
+     3            *(1.+fracz*zbar2(n))
+c	gamion(n,2) = 0.03*gamion(n,1)*(1-cforbl(n))
+	GAMION(N,2) = GAMION(N+1,2)*(1.+delma/radius_int) 
+     1		- DENS(N)*XNUIONb(N)*DELMA*(1.+fracz*zbar2(n))            
+	ssion(n) =  yni(N,1)*XNUIONI(N)*(1.+fracz*zbar2(n))
+c	1			+ yni(n,1)*xnuionb(n)	
+	call edgerotran(n,10)
+c	*************Differential slab heat fluxes************************	
+	gamheati(n) = gamheati(n+1) + delma*(cxcool(n) + cmulteq*qie(n))
+	gamheati(n) = gamheati(n) - fionb(n)*qnb(n)*delma
+	gamheate(n)=gamheate(n+1)+delma*
+     1					(coolion(n)+radcool(n)-cmulteq*qie(n))
+	gamheate(n) = gamheate(n) -	(1.-fionb(n))*qnb(n)*delma
+c	*****************x-transport corrections************************	
+c	*****************old way****************************************
+C	ion flux reduced by the part contributed by X-transport
+c	do 1940 n = 1,nx
+c	gamionX(n) = gamion(n,1)
+c	gamheatiX(n) = gamheati(n)
+c1940	continue
+ 
+c	do 1941 n = nx,24
+	
+c	gamionX(n+1) = gamionX(n) +dens(n)*xnuionb(n)*delma	
+c     1			+	DENS(N)*XNUIONI(N)*DELMA*(1.+fracz*zbar2(n))
+c    2 + 0.5*(xnsource(n)+xnsource(n+1)-sinknx(n)- sinknx(n+1))*delma
+		 
+c	gamheatiX(n+1) = gamheatiX(n) - delma*(cxcool(n) - cmulteq*qie(n))
+c    1   			+ fionb(n)*qnb(n)*delma
+c	2 + 0.5*(xesource(n)+xesource(n+1)-sinkex(n)-sinkex(n+1))*delma
+c1941	continue
+c	*********new way 11/10/11****************************************
+C	ion flux reduced by the part contributed by X-transport
+c	do 1950 n = 1,nx
+c	gamionX(n) = gamion(n,1)
+c	gamheatiX(n) = gamheati(n)
+c1950	continue
+ 
+c	do 1951 n = nx,24
+	
+c	gamionX(n+1) = gamionX(n) +dens(n)*xnuionb(n)*delma	
+c     1			+	DENS(N)*XNUIONI(N)*DELMA*(1.+fracz*zbar2(n))
+c     2 + (xtransource(n)-xtransink(n))*delma
+c		 
+c	gamheatiX(n+1) = gamheatiX(n) - delma*(cxcool(n) - cmulteq*qie(n))
+c     1   			+ fionb(n)*qnb(n)*delma
+c	2 + 0.5*(xesource(n)+xesource(n+1)-sinkex(n)-sinkex(n+1))*delma
+c1951	continue
+c***********************************************************************
+c	time dependent corrections
+	dnped_dt = 0.5*(dlnn_dt(n)*yni(n,1) +	dlnn_dt(n+1)*yni(n+1,1))
+	une = 0.25*(yni(n,1)+yni(n+1,1))*atnum(1)*xk*(tel(n)+tel(n+1)) +
+     1		0.25*(yni(n,2)+yni(n+1,2))*zbar2(n)*xk*(tel(n)+tel(n+1))
+	dweped_dt= 0.5*(dlnwe_dt(n)+dlnwe_dt(n+1))*1.5*une
+	uni = 0.25*(yni(n,1)+yni(n+1,1))*xk*(ti(n)+ti(n+1))
+	dwiped_dt= 0.5*(dlnwi_dt(n)+dlnwi_dt(n+1))*1.5*uni  
+	gamheati(n) = gamheati(n)+dwiped_dt*delma
+	gamheate(n) = gamheate(n)+dweped_dt*delma
+	gamion(n,1) = gamion(n,1)+dnped_dt*delma
+ 	gamionX(n)  = gamionX(n)+dnped_dt*delma
+ 	gamheat(n) = gamheati(n)+gamheate(n)
+1575	continue
+
+c     Use gamion(1,1) as a BC to integrate back out to edge for gammahat
+c     Corrent BCs for fast ions and energy lost in the core (see soldiv.for)
+      gammahat(1) = gamion(1,1)-BCnbi
+c      gammahat(1) = gamion(1,1)
+	qhatheati(1) = gamheati(1)-BCenbi
+	forbl(25) = forbl(24) 
+	do 1574	n=2,24
+	   radminor = aminor*sqrt(0.5*(1+elong**2))
+	   radius_int = rhor(n)*radminor
+c**********Differential slab form - leads to numerical errors***************
+c         gammahat(n+1) = gammahat(n)*(1.-2.*dFdr(n)
+c     1   *delma)+ dens(n)*xnuionb(n)*delma	
+c     2   +dens(n)*xnuioni(N)*delma*(1.+fracz*zbar2(n))
+c**********Differential cylindrical form - leads to numerical errors***************
+c         gammahat(n+1) = gammahat(n)*(1.+2.*dFdr(n)
+c     1   *delma-delma/radius_int)+ dens(n)*xnuionb(n)*delma	
+c     2   +dens(n)*xnuioni(N)*delma*(1.+fracz*zbar2(n))
+c**********Integral form in slab geometry******************************
+c	gammahat(n) = gammahat(1)
+c	do 555 m=1,n
+c         xpon = exp(-2.*(forbl(n)-forbl(m)))
+c	   srprim = (dens(m)*xnuionb(m)+dens(m)*xnuioni(m)*
+c	1       (1.+fracz*zbar2(m)))
+c	   inter = xpon*srprim*delma
+c	   gammahat(n) = gammahat(n)+inter
+c555	continue
+c**********Integral form in cylindrical geometry******************************
+	gammahat(n) = gammahat(1)
+	qhatheati(n) = qhatheati(1)
+	do 555 m=1,n
+	   call edgerotran(n,10)
+         xpon = exp(-2.*(forbl(n)-forbl(m)))
+	   srprim = (dens(m)*xnuionb(m)+dens(m)*xnuioni(m)*
+	1       (1.+fracz*zbar2(m)))
+	   inter = xpon*srprim*delma*rhor(m)/rhor(n)  
+	   gammahat(n) = gammahat(n)+inter
+	   call edgerotran(m,10)
+	   xponq = exp(-2.*(eorbl(n)-eorbl(m)))
+	   srprimq = -cxcool(m)- cmulteq*qie(m)
+	1             +fionb(m)*qnb(m)
+	   interq = xponq*srprimq*delma*rhor(m)/rhor(n)
+	   qhatheati(n) = qhatheati(n)+interq
+555	continue
+c     Assume radial carbon flux is zero
+      gamion(n,2) = 0.0
+c      gamion(n,2) = 0.03*gammahat(n)*(1-cforbl(n))

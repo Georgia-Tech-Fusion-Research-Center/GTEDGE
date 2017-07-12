@@ -1,0 +1,7 @@
+&BALANCE
+hconf = 1.0
+hrat = 1.0
+alphan = 3.5
+alphat2 = 3.0
+cballoon = 2.2
+/
