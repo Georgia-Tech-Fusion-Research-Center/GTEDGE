@@ -1,5 +1,5 @@
       SUBROUTINE EDGECALC
-      INCLUDE 'SOLDIV.FI'
+      INCLUDE 'Soldiv.fi'
       parameter (ml=26,jq=2,jp=6)
       dimension ynold(ml),yniold(ml),xnuatim(ml),zkHS1(ml),zkHS2(ml),
      1          velthet1old(ml),ratdrag(ml),beamdot(ml),
@@ -1503,12 +1503,12 @@ c     Minimum W to gradB drift delrho/2 out of node n
      2  (1.+psix**2)
         A = 1.5
         X = WMINX(n)/xti(n)
-        VALUE = GAMI(A,X)
+        VALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         fns = (value1 - value)/value1
         sinknx(n) = xniexp*abs(erex(n)/bphi)*fns/(6.28*rr)
         A = 2.5
-        EVALUE = GAMI(A,X)
+        EVALUE = GAMION(A,X)
         EVALUE1= GAMMA(A)
         ens = (value1 - value)/value1
         sinkex(n) =  xk*xti(n)*xniexp*abs(erex(n)/bphi)*ens/(6.28*rr)
@@ -1524,12 +1524,12 @@ c     Minimum W to gradB drift delrho/2 out of node n
       Wminx(25) = Eminx(25,25)*xti(25)
       A = 1.5
       X = EMINX(25,25)
-      VALUE = GAMI(A,X)
+      VALUE = GAMION(A,X)
       VALUE1= GAMMA(A)
       Xtranp(25,25) = (value1 - value)/value1
 
       A = 2.5
-      EVALUE = GAMI(A,X)
+      EVALUE = GAMION(A,X)
       EVALUE1= GAMMA(A)
       Xtrane(25,25) = (evalue1 - evalue)/evalue1
 
@@ -1731,7 +1731,7 @@ c     goto 7899
 c     shot 11897@2140 H-mode, deltathetx = 0.15
 
 
-9876  continue
+ 9876  continue
 
       EMIN(12,13) = 1.1
       EMIN(12,14) = 1.7
@@ -1949,7 +1949,7 @@ c     goto 7899
 c     shot 123302, deltathetx = 0.15
 
 
-23302 continue
+ 2330 continue
       EMIN(12,13) = 0.5
       EMIN(12,14) = 1.4
       EMIN(12,15) = 2.5
@@ -2498,7 +2498,7 @@ c*****************this is where the Emin (m,mp) go ****************************
 c     X-LOSS FRACTION, CUMULATIVE WITH RADIUS******old way**********************
       do 5310 n = 1, 25
         Exloss(n) = 100.0e3
-5310  continue
+ 5310  continue
 c     delthetx = 0.1
       Exloss(17) = 13.4e3
       Exloss(18) = 10.9e3
@@ -2553,33 +2553,33 @@ c     region, so that all particles with energy > Exloss and lost.
         exmin = Exloss(n-1)/xti(n)
         A = 1.5
         X = ExMIN
-        VALUE = GAMI(A,X)
+        VALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         FX(n) =  (value1 - value)/value1
 
         A = 2.5
-        EVALUE = GAMI(A,X)
+        EVALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         EX(n) = (evalue1 - evalue)/evalue1
 
         exmin = Exloss(n)/xti(n)
         A = 1.5
         X = ExMIN
-        VALUE = GAMI(A,X)
+        VALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         FX(n) =  (value1 - value)/value1  - fx(n)
         fx(n) = fx(n-1)+fx(n)
         A = 2.5
-        EVALUE = GAMI(A,X)
+        EVALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         EX(n) = (evalue1 - evalue)/evalue1 - ex(n)
         ex(n) = ex(n-1) + ex(n)
-5315  continue
-5301  write (129, '(1x,35A)') '  rho     EXLOSS      IONs      ENERGY  '
-5302  format(f6.3,e10.3,2f10.3)
+ 5315  continue
+ 5301  write (129, '(1x,35A)') '  rho     EXLOSS      IONs      ENERGY  '
+ 5302  format(f6.3,e10.3,2f10.3)
       do 5320 n = 1, 25
         write(129,5302) rhor(n),Exloss(n), fx(n),ex(n)
-5320  continue
+ 5320  continue
 
 c     min W to gradB drift beyond 2nd mesh interval
 
@@ -2589,7 +2589,7 @@ c     min W to gradB drift beyond 2nd mesh interval
         sinkex(n) = 0.
         xesource(n) = 0.
         xnsource(n) = 0.
-6900  continue
+ 6900  continue
       sumsinkn = 0.0
       sumsinke = 0.0
       sumsepn = 0.0
@@ -2612,23 +2612,23 @@ c     X-transport fractions
           exmin = E1(n,m)/xti(n)
           A = 1.5
           X = ExMIN
-          VALUE = GAMI(A,X)
+          VALUE = GAMION(A,X)
           VALUE1= GAMMA(A)
           fraclossn(n,m) =  (value1 - value)/value1
           A = 2.5
-          EVALUE = GAMI(A,X)
+          EVALUE = GAMION(A,X)
           VALUE1= GAMMA(A)
           fraclosse(n,m) = (evalue1 - evalue)/evalue1
-6905    continue
+ 6905    continue
 c     fraction gradB drifting across separatrix
         exmin = E1(n,25)/xti(n)
         A = 1.5
         X = ExMIN
-        VALUE = GAMI(A,X)
+        VALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         fracseplossn =  (value1 - value)/value1
         A = 2.5
-        EVALUE = GAMI(A,X)
+        EVALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         fracseplosse = (evalue1 - evalue)/evalue1
 
@@ -2653,7 +2653,7 @@ c     sepex(n) = sinkex(n)*fraclosse
 
         sumxtransn = sumsinkn - sumsepn
         sumxtranse = sumsinke - sumsepe
-6910  continue
+ 6910  continue
 c     sources into other mesh intervals & X-loss
       sumsourcen = 0.0
       sumsourcee = 0.0
@@ -2665,7 +2665,7 @@ c     sources into other mesh intervals & X-loss
           xee =   xk*xti(n)*(xniexp*abs(erex(n)/bphi))/(6.28*rr)
           A = 1.5
           X = E1(n,m)/xti(n)
-          VALUE = GAMI(A,X)
+          VALUE = GAMION(A,X)
           VALUE1= GAMMA(A)
           flossn1 =  (value1 - value)/value1
           if(m.eq.25) then
@@ -2673,13 +2673,13 @@ c     sources into other mesh intervals & X-loss
             goto 6911
           endif
           X = E1(n,m+1)/xti(n)
-          VALUE = GAMI(A,X)
+          VALUE = GAMION(A,X)
           flossn2 =  (value1 - value)/value1
-6911      xnsource(m) = xnsource(n) + xnn*(flossn1 - flossn2)
+ 6911      xnsource(m) = xnsource(n) + xnn*(flossn1 - flossn2)
 
           A = 2.5
           X = E1(n,m)/xti(n)
-          VALUE = GAMI(A,X)
+          VALUE = GAMION(A,X)
           VALUE1= GAMMA(A)
           flosse1 =  (value1 - value)/value1
           if(m.eq.25) then
@@ -2687,13 +2687,13 @@ c     sources into other mesh intervals & X-loss
             goto 6912
           endif
           X = E1(n,m+1)/xti(n)
-          VALUE = GAMI(A,X)
+          VALUE = GAMION(A,X)
           flosse2 =  (value1 - value)/value1
-6912      xesource(m) = xesource(n) + xee*(flosse1 - flosse2)
+ 6912      xesource(m) = xesource(n) + xee*(flosse1 - flosse2)
           sumsourcen = sumsourcen + xnsource(m)
           sumsourcee = sumsourcee + xesource(m)
-6915    continue
-6920  continue
+ 6915    continue
+ 6920  continue
       rr = rhor(25)*aminor*SQRT(0.5*(1.+ELONG**2))
 
       xlossnsum = xnsource(25)*6.28*rr
@@ -2704,7 +2704,7 @@ c     minimum energy EMIN(m,m') for transport from mesh m to mesh m'>m (keV)
 c     must be created by hand from previous XLOSS calculation 7/27/2011
 c     1.E3 INDICATES THAT EMIN > 20 KEV, EMIN THE SAME FOR SEVERAL MESH INDICATES
 c     THAT IONS PASS THROUGH THESE MESH
-7899  continue
+ 7899  continue
 c    IOPXTRAN = 1 to include X-transport
       ioptxtran = 1
 c     **********************************
@@ -2715,8 +2715,8 @@ c     epmin in keV, xti in eV
       do 3510 m = nx,24
         do 3505 mp = m+1,25
           epmin(m,mp) = emin(m,mp)/(1.e-3*xti(m))
-3505    continue
-3510  continue
+ 3505    continue
+ 3510  continue
 c     *********calculate particle & energy transport from mesh m to mesh mp********
 c*****************old way**********************************************************
       do 3520 m = nx,24
@@ -2726,14 +2726,14 @@ c     PARTICLES
           X =  epmin(m,mp)
           VALUE = GAMIC(A,X)
           VALUE1= GAMMA(A)
-          value2 = gami(A,X)
+          value2 = GAMI(A,X)
           flossn1 =  (value1-value2)/value1
 
 
 
           Y =  epmin(m,mp+1)
           VALUE = GAMIC(A,Y)
-          value2 = gami(A,Y)
+          value2 = GAMI(A,Y)
           flossn2 =  (value1-value2)/value1
           XXN(m,mp) = flossn1 - flossn2
           if(mp.eq.25) XXN(m,mp) = flossn1
@@ -2744,21 +2744,21 @@ c     ENERGY
           A = 2.5
           VALUE = GAMIC(A,X)
           VALUE1= GAMMA(A)
-          value2 = gami(A,X)
+          value2 = GAMI(A,X)
           flosse1 =  (value1-value2)/value1
-          value2 = gami(A,Y)
+          value2 = GAMION(A,Y)
           flosse2 =  (value1-value2)/value1
           XXE(m,mp) = flossE1 - flossE2
           if(mp.eq.25) XXE(m,mp) = flosse1
 
 c     if(abs(xxe(m,mp)).lt.1.e-2) xxe(m,mp) = 0.0
-3515    continue
-3520  continue
+ 3515    continue
+ 3520  continue
 c     ****************calculate particle and energy sinks at each mesh *************
       do 3524 m = 1,25
         sinknx(m) = 0.0
         sinkex(m) = 0.0
-3524  continue
+ 3524  continue
       do 3530 m = nx,24
         xniexp = exne(m)/(atnum(1)+fracz*zbar(m))
         sinknx(m) =     (xniexp*abs(erex(m)/bphi))
@@ -2768,18 +2768,18 @@ c     ****************calculate particle and energy sinks at each mesh *********
         do 3525 mp =m+1,25
           sinknsum = sinknsum + XXN(m,mp)
           sinkesum = sinkesum + XXE(m,mp)
-3525    continue
+ 3525    continue
         sinknx(m) = sinknx(m)*sinknsum
         sinkex(m) = sinkex(m)*sinkesum
         xl = 6.28*rhor(m)*aminor*sqrt(0.5*(1.+elong**2))
         sinknx(m) = sinknx(m)/xl
         sinkex(m) = sinkex(m)/xl
-3530  continue
+ 3530  continue
 c     **********calculate particle and energy sources at each mesh**************
       do 3534 m = 1,25
         xnsource(m) = 0.0
         xesource(m) = 0.0
-3534  continue
+ 3534  continue
       do 3545 m = nx+1,25
         do 3540 mp = nx,m-1
           xniexp = exne(mp)/(atnum(1)+fracz*zbar(mp))
@@ -2790,8 +2790,8 @@ c     **********calculate particle and energy sources at each mesh**************
 
           xnsource(m) = xnsource(m)/xl
           xesource(m) = xesource(m)/xl
-3540    continue
-3545  continue
+ 3540    continue
+ 3545  continue
 
 c***********************new way 11/10/11******happy birthday USMC**************
 cXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -2803,7 +2803,7 @@ c     ExB drift ion flux into x-region from plasma
 c     loss averaged over flux surface
         xl = 6.28*rhor(n)*aminor*sqrt(0.5*(1.+elong**2))
         xtransink(n) = gamin(n)/xl
-3550  continue
+ 3550  continue
 
 c     ExB drift out of x-region into plasma
       do 3560 n = nx+1,25
@@ -2817,11 +2817,11 @@ c     ExB drift out of x-region into plasma
           depdr = (epmin(np,n+1)-epmin(np,n))/delr
           gamout(n) = gamout(n) + gamin(np)*sqrt(epmin(np,n))*
      1    exp(-1.0*epmin(np,n))*depdr*delr
-3555    continue
+ 3555    continue
         gamout(n) = gamout(n)/GAMMA(1.5)
         xlg = 6.28*rhor(n)*aminor*sqrt(0.5*(1.+elong**2))
         xtransource(n) = gamout(n)/xlg
-3560  continue
+ 3560  continue
 
 C******************Xloss fractions*******************************************
       do 8315 n = 1,25
@@ -2834,22 +2834,22 @@ C******************Xloss fractions*******************************************
         exmin = 1e3*Emin(n,25)/xti(n)
         A = 1.5
         X = ExMIN
-        VALUE = GAMI(A,X)
+        VALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         FX(n) =  (value1 - value)/value1
 
         A = 2.5
-        EVALUE = GAMI(A,X)
+        EVALUE = GAMION(A,X)
         VALUE1= GAMMA(A)
         EX(n) = (evalue1 - evalue)/evalue1
 
 
-8315  continue
-8301  write (129, '(1x,35A)') '  rho   EMIN(n,25)    FX       EX  '
-8302  format(f6.3,e10.3,2f10.3)
+ 8315  continue
+ 8301  write (129, '(1x,35A)') '  rho   EMIN(n,25)    FX       EX  '
+ 8302  format(f6.3,e10.3,2f10.3)
       do 8320 n = 1, 25
         write(129,5302) rhor(n),Emin(n,25), fx(n),ex(n)
-8320  continue
+ 8320  continue
 c***********************current density xtran*********************************
 
 c     x-trans current density, assuming the ion drifts from one radius
@@ -2862,7 +2862,7 @@ c     COMPENSATING INWARD CURENT DENSITY FOR XTRAN
 
         xniexp = exne(mp)/(atnum(1)+fracz*zbar(mp))
         xebin(mp) =     (xniexp*abs(erex(mp)/bphi))
-5550  continue
+ 5550  continue
 
       do 5555 mp = nx,24
         xebout(mp) = 0.0
@@ -2874,27 +2874,27 @@ c     COMPENSATING INWARD CURENT DENSITY FOR XTRAN
           gxg(mpp,mp) = gx
           dxdrg(mpp,mp) = dxdr
 
-5554    continue
+ 5554    continue
 
-5555  continue
+ 5555  continue
       do 5558 mp = nx,25
         xebout(mp) = 0.0
         do 5557 mpp = nx, mp-1
           xebout(mp) = xebout(mp) + 0.5*(xebin(mpp)*gxg(mpp,mp) +
      1                xebin(mpp+1)*gxg(mpp+1,mp))*delr
-5557    continue
+ 5557    continue
         xnet(mp) = 0.5*(xebin(mp)+xebin(mp+1)) - xebout(mp)
-5558  continue
+ 5558  continue
 
       do 5560 m = nx+1,25
         cdxtran(m) = 0.0
         do 5559 mp = nx, m
 
           cdxtran(m) = cdxtran(m) - (eq(1)/6.28)*xnet(mp)*delr
-5559    continue
+ 5559    continue
 c     reduction of the # of ions that can exb drift into x-region
         cdxtran(m) = 0.5*cdxtran(m)
-5560  continue
+ 5560  continue
       z =delr
 
 
@@ -2906,7 +2906,7 @@ c     A = 1.5
 c     X =  epmin(m,mp)
 c     VALUE = GAMIC(A,X)
 c     VALUE1= GAMMA(A)
-c     value2 = gami(A,X)
+c     value2 = GAMI(A,X)
 c     flossn1 =  (value1-value2)/value1
 c     cdxtran(mp) = cdxtran(mp) + eq(1)*exbin*delr*flossn1/(6.28*radr)
 c5555 continue
@@ -2925,7 +2925,7 @@ c     A = 1.5
 c     X =  epmin(m,25)
 c     VALUE = GAMIC(A,X)
 c     VALUE1= GAMMA(A)
-c     value2 = gami(A,X)
+c     value2 = GAMI(A,X)
 c     flossn1 =  (value1-value2)/value1
 c     cdxtran(m) = cdxtran(m-1) + eq(1)*exbin*delr*flossn1/(6.28*radr)
 c5565 continue
@@ -2936,7 +2936,8 @@ cXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 C**************************END OF X-LOSS & X-TRANSPORT CALCULATION*************
 c*******will calculate below the effect on total particle and heat fluxes**********
-6670  continue
+
+ 6670  continue
 
 c     **************************************************************
 c     calculate heat and particle flux distributions
@@ -2966,7 +2967,7 @@ c     zbar2(25) = 6.0
       endif
 
       CALL cefits (IZ1, TDBL, XLZDBL, 1, DLZDBL)
-1368  XLradZ(25)= eXLZDBL
+ 1368  XLradZ(25)= eXLZDBL
 
 c           CONVERT FROM ERG-CM3/EV-S TO J-M3/S
       XLradZ(25) = XLradZ(25)*1.e-13
@@ -3027,7 +3028,7 @@ c     zbar2(n) = 6.0
         endif
 
         CALL cefits (IZ1, TDBL, XLZDBL, 1, DLZDBL)
-1565    XLradZ(n)= eXLZDBL
+ 1565    XLradZ(n)= eXLZDBL
 
 c           CONVERT FROM ERG-CM3/EV-S TO J-M3/S
         XLradZ(n) = XLradZ(n)*1.e-13
@@ -3130,7 +3131,7 @@ c     time dependent corrections
         gamion(n,1) = gamion(n,1)+dnped_dt*delma
         gamionX(n)  = gamionX(n)+dnped_dt*delma
         gamheat(n) = gamheati(n)+gamheate(n)
-1575  continue
+ 1575  continue
 
 c     Use gamion(1,1) as a BC to integrate back out to edge for gammahat
 c     Corrent BCs for fast ions and energy lost in the core (see soldiv.for)
@@ -3214,7 +3215,7 @@ c      gamion(n,2) = 0.03*gammahat(n)*(1-cforbl(n))
 c********
 c      qhatheati(n+1) = qhatheati(n)*(1-delma*Edr(n)*radius_int)
 c     1   -delma*radius_int*(cxcool(n)+ cmulteq*qie(n)-fionb(n)*qnb(n))
-1574  continue
+ 1574  continue
 
 c     adjustment to surface flux boundary conditions
 c     to account for time-dependent n and nT in pedestal
@@ -3234,7 +3235,7 @@ c     set time derivatives to input profile values data20
         ye = ye + 0.5*(dlnwe_dt(n)+dlnwe_dt(n+1))*1.5*une*delma
         yi = yi + 0.5*(dlnwi_dt(n)+dlnwi_dt(n+1))*1.5*uni*delma
         yn = yn + 0.5*(dlnn_dt(n)+dlnn_dt(n+1))*yni(n,1)*delma
-1576  continue
+ 1576  continue
 c     adjust heat & particle flux for change in boundary conditions
 c     ***5/17/07***assume gam constant between ELMs ***no adjustment************
 c     *******6/22/07  adjust edge fluxes************************
@@ -3244,7 +3245,7 @@ c     *******6/22/07  adjust edge fluxes************************
         gamion(n,1) = gamion(n,1) - yn
         gammahat(n) = gammahat(n) - yn
         gamionX(n)  = gamionX(n)  - yn
-1577  continue
+ 1577  continue
 
 
 c     *****************CALCULATE XNUDRAG ***************************************
@@ -3263,7 +3264,7 @@ c*********calculated from input gradients*******************
 
           if(j.eq.2) xz = zbar2(n)
           PRESS(J)=-1.*(ti(n)/(xz*BTHET))*xlpm(n)
-1908    continue
+ 1908    continue
         press1(n) = press(1)
         press2(n) = press(2)
 c     ***********************************************
@@ -3793,7 +3794,7 @@ c     new calculation
      2      xnuc21star*drive1(n)/xnutheta1(n))/bracc
         vpol61(n) = vpol61(n)-(bthet/sqrt(bphi**2+bthet**2))*yy1(n)
         vpol62(n) = vpol62(n)-(bthet/sqrt(bphi**2+bthet**2))*yy2(n)
-1578  continue
+ 1578  continue
 c**************temporary input nudrag*************************************
 c ynudrag1(1) =.311E+05
 c ynudrag1(2) =.320E+05
@@ -3825,7 +3826,7 @@ c    ynudrag1(25) =.247E+06
 
 c*************************************************************************
 C   ***************INFER CHI's FROM EXP N,T,GSCL & CALC. Q, GAM*****************
-1579  do 1589 n = 1,25
+ 1579  do 1589 n = 1,25
         GAMEL = ATNUM(1)*GAMION(N,1) + ZBAR2(N)*GAMION(N,2)
         XCHIE(N) = EXLTE(N)*((GAMHEATE(N)/(EXNE(N)*XK*XTE(N)))-
      1  1.5*GAMEL/EXNE(N))
@@ -3998,7 +3999,7 @@ c     convective fractions
         econvi(n) = 2.5*(gamion(n,1)+gamion(n,2))*xk*xti(n)/gamheati(n)
 c     calculate theoretical chi's
 
-1589  continue
+ 1589  continue
       do 7100 nmesh =1,25
         n= 26-nmesh
         EQ(1) = 1.6E-19
@@ -4037,7 +4038,7 @@ c     **************************************************************************
             Y = SQRT(XNI2)*(z2**2)*z1
             X = (EP0/EQ(1))**1.5
             COULOG(J,K) = LOG(12.*3.1416*(xti(n)**1.5)*X/Y)
-107     continue
+ 107     continue
 c           BRAGINSKI COLLISION FREQUENCIES
         XMR11 = XMAS(1)*(1.+XMAS(1)/XMAS(1))
         XMR12 = XMAS(1)*(1.+XMAS(1)/XMAS(2))
@@ -4083,7 +4084,7 @@ c     CHANG-HINTON CHI
         XMUii=(XNUc(1,1)*Qedge(n)*RMAJOR/(XvthI*(EP**1.5)))*(1.+1.54*alfa)
 
         dp = 0.
-6100    G1 = (1. + 1.5*((EP**2)+ep*dp)+.375*(ep**3)*dp)/(1.+.5*ep*dp)
+ 6100    G1 = (1. + 1.5*((EP**2)+ep*dp)+.375*(ep**3)*dp)/(1.+.5*ep*dp)
         G2 =SQRT(1.-(EP**2))*(1.+0.5*ep*dp)/(1.+(dp/ep)*(sqrt(1.-ep**2)
      1  -1))
         A1 =(0.66*(1.+1.54*ALFA)+(1.88*SQRT(EP)-1.54*EP)*(1.+3.75*ALFA))/
@@ -4106,7 +4107,7 @@ c     orbit squeezing
 
 
 
-6110    continue
+ 6110    continue
 c     if(ioptshear.eq.0) sheare(n) =      1.-(rhoti(1)/abs(fp))*dlnEdr*para
 
 c      6125 chinc(n) = chinc(n)/(abs(sheare(n))**1.5)
@@ -4485,7 +4486,7 @@ c     uses Callen's estimated paleo power flow at separatrix
           do 2660 np = n,24
             sum = sum + (1.+0.5*(bigM(np+1)+bigM(np)))*
      1      (coefy(np+1)-coefy(np))
-2660      continue
+ 2660      continue
         endif
         VpA = (6.28**2)*rmajor*aminor*rhor(n)*(1.+elong**2)/(2.*elong)
         epowpc2 = epowpcsep2 + sum
@@ -4512,7 +4513,7 @@ c     integrate paleo power flow out from rho = .86
             fluxpal(np+1) = (cpalfrac*epower86 - sum)/VpA
             chiepale4(np+1) = fluxpal(np+1)/
      1      (exne(np+1)*xk*xte(np+1)/exlte(np+1))
-2665      continue
+ 2665      continue
         endif
 
 c     drift alfven (CPP,38,118,1998)
@@ -4619,7 +4620,7 @@ c     zbar2(n) = 6.0
         endif
 
         CALL cefits (IZ1, eTDBL, eXLZDBL, 1, eDLZDBL)
-1965    XLradZ(n)= eXLZDBL
+ 1965    XLradZ(n)= eXLZDBL
 
 c           CONVERT FROM ERG-CM3/EV-S TO J-M3/S
         XLradZ(n) = XLradZ(n)/1.6e-12
@@ -4662,10 +4663,10 @@ c     CHI0ION & CHI0EL ARE THE BACKGROUND CHI'S IN M^2/S
      1  2.5*XNU*VRAD1(N)/EXLTE(N) - CHI0EL)
 
 
-7100  continue
+ 7100  continue
 
 c     **************END INFERRENCE OF CHI'S*******************************
-7200  continue
+ 7200  continue
 c***********************************
       goto 1594
 c*************************************
@@ -4716,9 +4717,9 @@ c     if(ti(n).gt.1.e3) ti(n) = 1.e3
 c     tel(n) = tel(n+1)*
 c     1     (1.+delna*0.5*(c6*xltem(n)+(1.-c6)*xltem(n+1)))/
 c     2     (1.-delna*0.5*(c6*xltem(n)+(1.-c6)*xltem(n+1)))
-1593  continue
+ 1593  continue
 
-1594  continue
+ 1594  continue
 c     goto 700
 c     ******************end heat transport investigation************
       goto 3700
@@ -4761,7 +4762,7 @@ c    1  xni(1)*xmas(1)*bracket
      1           /xmas(2) + xnuc21(n)*bracket
         xnud2(n) = xnum2/torv(n)
         xnudtot2(n) = xnud2(n)
-6799    continue
+ 6799    continue
         vphical(2) = xnum2/xnud2(n)
         vphical(1) = vphical(2)*(1. + xnud2(n)/xnuc21(n)) -
      1       (xmtor(2)+xni(2)*zbar2(n)*eq(1)*(ephia+bthet*vrad2(n)))/
@@ -4779,7 +4780,7 @@ c     2     (xni(1)*xmas(1)*xnuc(1,2))
         vtor2(n) = vphical(2)
         vphia(1) = vphical(1)
         vphia(2) = vphical(2)
-3990    ioptapproach = 5
+ 3990    ioptapproach = 5
 c call edgerotran(n,0)
 c vth(1) = sqrt(2.*xk*ti(n)/xmas(1))
 c vth(2) = sqrt(2.*xk*ti(n)/xmas(2))
@@ -4789,18 +4790,18 @@ c velthet1(n) = vtheta(1)
 c velthet2(n) = vtheta(2)
 c xnudragyro1(n) = xnudrag(1)
 c xnudragyro2(n) = xnudrag(2)
-3600  continue
-3700  continue
+ 3600  continue
+ 3700  continue
       OPEN(unit=121,FILE='pedestal.TXT',STATUS='UNKNOWN')
 
       OPEN(122,FILE='pedestalplot.TXT',STATUS='UNKNOWN')
       if(jwarn.eq.1) write(121,1999)
-1999  format(1x,'not converged on 2000 loop after iterations=',I3.0)
-1030  format (i4)
+ 1999  format(1x,'not converged on 2000 loop after iterations=',I3.0)
+ 1030  format (i4)
       do 7440  n = nx,24
         write(121,1030) n
         write(121,1000)  (epmin(n,m),m=n+1,25)
-7440  continue
+ 7440  continue
       write(121,'(1x,35A)') '   rho      ne         ti         te
      1 vrad    vpinch5  gamconve  '
       write(122,'(1x,35A)') '   rho      ne         ti         te  '
@@ -4814,7 +4815,7 @@ c      sepdif = xnsepex - xnesepreal
 
         sion(n) = zne(n)*0.5*(ynuioni(n) + ynuioni(n+1))
 c  if(n.ne.25) xlnm(n+1) = log(yni(n,1)/yni(n+1,1))/delna
-750   continue
+ 750   continue
       write(121,'(1x,35A)')'   rho    gamion    gammahat   gamionorb
      1 gamionorbCUR gamionC   xgamionorb  xtransink  xtransourc'
       do 751 n = 1,25
@@ -4834,13 +4835,13 @@ c  if(n.ne.25) xlnm(n+1) = log(yni(n,1)/yni(n+1,1))/delna
       do 753 n = 1, 25
         write(121,1000) rhor(n),xchii(n), xchiiorb(n), xchiiorbX(n),
      1  xchii15(n),xchiiorb15(n),xchiiorbX15(n)
-753   continue
+ 753   continue
       write(121,'(1x,35A)')'   rho      xxchii   xxchiiorb  xxchii15
      1xxchiiorb15  chii  chii15'
       do 754 n = 1, 25
         write(121,1000) rhor(n),xxchii(n), xxchiiorb(n), xxchii15(n),
      1  xxchiiorb15(n),xchii(n),xchii15(n)
-754   continue
+ 754   continue
       write(121,'(1x,35A)')'   rho       qi25     qi15    qi25orb    qi1
      25orb  qi25orbx  qi15orbx       qi25xtran  qi15xtran  '
       do 7545 n = 1, 25
@@ -4848,13 +4849,13 @@ c  if(n.ne.25) xlnm(n+1) = log(yni(n,1)/yni(n+1,1))/delna
      2    qcond15orb(n),qcond25orbx(n),qcond15orbx(n)
 
      ,
-7545  continue
+ 7545  continue
       write(121,'(1x,35A)')'   rho       qi25     qi15    qi25xtran  qi1
      25xtran q25xtranorb q15xtranorb  '
       do 7546 n = 1, 25
         write(121,1000) rhor(n),qcond25(n),qcond15(n),qcond25xtran(n),
      2  qcond15xtran(n),qcond25xtranorb(n),qcond15xtranorb(n)
-7546  continue
+ 7546  continue
 
 
       write(121,'(1x,35A)') '   rho    gamheate    gamheati   gamion
@@ -4876,7 +4877,7 @@ c     Vsin multiplier
         heatvisc(n) = (vees/rmajor)*heatvisc(n)
         write (121,1000) rhor(n),gamheate(n),gamheati(n),
      1  gamion(n,1), heatin(n),heatvisc(n), gamconvi
-755   continue
+ 755   continue
       write(121,'(1x,35A)') '   rho       eta0        eta4    qcondi
      1qconde  chii1    chii2  chii3   '
       do 756 n = 1,25
@@ -4890,7 +4891,7 @@ c     Vsin multiplier
         chii3 = Q3*exlti(n)/(yni(n,1)*xk*ti(n))
         write(121,1000) rhor(n),eta0(n),eta4(n),qcondi(n),gamconde(n),
      1  chii1,chii2,    chii3
-756   continue
+ 756   continue
 
       write(121,'(1x,35A)') '   rho      Qheati Qheatiorb   Qconvi25
      2Qconvi15 Qconvi25orb Qconvi15orb  '
@@ -4904,7 +4905,7 @@ c     Vsin multiplier
         Qconvi15orb = 1.5*xk*gamion(n,1)*xti(n)*(1.- forbl(n))
         write(121,1000) rhor(n),Qi,Qiorb,qconvi25,qconvi15,qconvi25orb,
      2  qconvi15orb
-757   continue
+ 757   continue
       write(121,'(1x,35A)')'   rho     chii25    chii25orb chii15
      2chii15orb '
       do 758 n = 1,25
@@ -4921,13 +4922,13 @@ c     Vsin multiplier
         chii15 = xx*(Qi-Qconvi15)
         chii15orb = xx*(Qiorb-Qconvi15orb)
         write(121,1000) rhor(n),chii25,chii25orb,chii15,chii15orb
-758   continue
+ 758   continue
       write(121,'(1x,35A)')'  rho       chii25    chiiorb25   chii15  ch
      1iiorb15 gamionorb cdxtran '
       do 759 n = 1, 25
         write(121,1000) rhor(n),xchii(n),xchiiorb(n),xchii15(n),
      1  xchiiorb15(n),gamionorb(n),cdxtran(n)
-759   continue
+ 759   continue
       write(121,'(1x,35A)')'   rho     Eionorb    Extran     Emom
      2Evpol   Epress     Etot    Eexp   Etot2   '
       do 7595 n=1,25
@@ -4952,15 +4953,15 @@ c     Eionorb = 0.0
         Etot2 = Emom+Evpol+Epress
         write(121,1000) rhor(n),Eionorb,Extran,Emom,Evpol,Epress,Etot,
      2  erex(n), etot2
-7595  continue
+ 7595  continue
       write(121,'(1x,35A)')'   rho    -1.*cdionorb  cdxtran '
       do 7611 n = 1,25
         write(121,1000) rhor(n),-1.*cdionorb(n),cdxtran(n)
-7611  continue
+ 7611  continue
       write(121,'(1x,35A)')'   rho    velthet1  velthet3 '
       do 7612 n = 1,25
         write(121, 1000)  rhor(n),velthet1(n),velthet3(n)
-7612  continue
+ 7612  continue
 
       write(121,'(1x,35A)') '   rho     nudrag1*    nuatom1   momphi1
      1nugyro1  nurip1  xdrag1sep  '
@@ -4968,14 +4969,14 @@ c     Eionorb = 0.0
         write (121,1000) rhor(n),xnudtot1(n),xnuati(n)+xnuioni(n)+xnuionb(
      1  n),xmomtor1(n),xnudragyro1(n),xnudragrip(n,1),XNUDtot1s(n)
         dragfreq(n) = xnudtot1(n)
-760   continue
+ 760   continue
       write(121,'(1x,35A)') '   rho     nudrag2*    nuatom2   momphi2
      1nugyro2  nurip2  xdrag2sep  '
       xcb = 0.0
       do 761 n = 1,25
         write (121,1000) rhor(n),xnudtot2(n), xcb,
      1  xmomtor2(n),xnudragyro2(n),xnudragrip(n,2),XNUDtot2s(n)
-761   continue
+ 761   continue
 
 c     write(121,'(1x,35A)')'  rho      vphi1     vphi2     vphi2exp
 c     2 vphi1ex    DELV0   DELV1    vphi1sep   vphi2sep '
@@ -4986,7 +4987,7 @@ c   Temporary values set for vph, vphiex, and vphip variables.
       do 762 n = 1,25
         write(121, 1000) rhor(n),xnudtot1(n),xnudtot2(n),DELV0(N),
      1  DELV1(N),xnuinert1(n),xnuati(n)
-762   continue
+ 762   continue
 c*********Eq 4 from Structure... paper April, 2013*******************
 c     do 7615 n = 1,25
 c     vphi1p=(torq1(n)-yni(n,1)*xmas(1)*xnuc12(n)*delv1(n))/
@@ -5013,7 +5014,7 @@ c7615 continue
       write(500,'(1x,35A)')'  vph1      vph2      vphi1ex    torv      v
      2pol61   vpol62    vpol1ex  vthexp    eradtot'
 c*********Eq 4 from Structure... paper June, 2013*******************
-      do 76155 n = 1,25
+      do 7615 n = 1,25
         torq1(n) = torq1(n)/(yni(n,1)*xmas(1)*(xnuc12(n)+xnudzero(n)))
         torq2(n) = torq2(n)/(yni(n,2)*xmas(2)*(xnuc21(n)+xnudzero(n)))
         xx = (xnuc12(n)+xnudzero(n))*(xnuc21(n)+xnudzero(n))
@@ -5064,7 +5065,7 @@ c     eradcur = -1.*eq(1)*etares*(orbcur+Fretcur(n))
         write(500,1000) vph1(n),vph2,vphi1ex,torv(n),vpol61(n),
      1  vpol62(n),vpol1ex(n),vthexp(n),eradtot
         write(121,1000) rhor(n),rotj,rotk,eradpres,eradtot,erex(n)
-76155 continue
+ 7615 continue
 
 
       write(121,'(1x,35A)') '   rho      xno      coldno    cxcool
@@ -5073,7 +5074,7 @@ c     eradcur = -1.*eq(1)*etares*(orbcur+Fretcur(n))
       do 765 n = 1,25
         write (121,1000) rhor(n),yno(n),coldno(n),cxcool(n),
      1  radcool(n),coolion(n), qnbe(n)
-765   continue
+ 765   continue
       write(121,'(1x,35A)') '   rho  -(dp/dr)/p -(dTi/dr)/T -(dn/dr)/n
      1-(dTe/dr)/T xnuion qnbi '
 
@@ -5083,7 +5084,7 @@ c     eradcur = -1.*eq(1)*etares*(orbcur+Fretcur(n))
      1  xltem(n),xnuioni(n)+xnuionb(n),qnbi(n)
 
 
-770   continue
+ 770   continue
       write(121,'(1x,35A)') '   rho       exlti     exlte    exlne
      1 sion       zbar  rhon  '
 
@@ -5091,7 +5092,7 @@ c     eradcur = -1.*eq(1)*etares*(orbcur+Fretcur(n))
         xlnm(n) = 1./xlne(n)
         write (121,1000) rhor(n),exlti(n),exlte(n),xlne(n),ssion(n),
      1     zbar2(n),rhorn(n)
-7701  continue
+ 7701  continue
 C*****************gradient scale lengths*********************************\
       write(121,'(1x,35A)') '  rho       Ln         snion(n)   forb
      2gamion  1/r term   S term   nujk term  '
@@ -5109,7 +5110,7 @@ C*****************gradient scale lengths*********************************\
         write (121,1000) rhor(n),xlength, snion(n),forbl(n),gamion(n,1),
      2                   xLnmin1,xLnmin2,xLnmin3
 
-7702  continue
+ 7702  continue
       write(121,'(1x,35A)') '  rho       Ln         exlne     exlti   for
      2b      gamion    xlpjmin    xlnjmin  '
       do 7703 n=1,25
@@ -5127,7 +5128,7 @@ C*****************gradient scale lengths*********************************\
         write (121,1000) rhor(n),xlength, xlne(n),  exlti(n),forbl(n),
      2           gamion(n,1), xLpjmin,xLnmin(n)
 
-7703  continue
+ 7703  continue
 c**************************************************************************
       write(121,'(1x,35A)') '  rho     xchii2     xchie2    diffii    di
      1ffiz    diffzz   diffzi '
@@ -5135,14 +5136,14 @@ c**************************************************************************
 
         write(121,1000) rhor(n),xchii2(n),xchie2(n),diffii(n),
      1  diffiz(n),diffzz(n),diffzi(n)
-771   continue
+ 771   continue
       WRITE(121,'(1X,35A)') '  rho       q         shear     bigM
      1Y     xnuei*     qie '
       do 7710 n = 1,25
         write(121,1000) rhor(n),qedge(n),shearho(n),bigM(N),coefy(N),
      1  starnue(N),qie(n)
 
-7710  continue
+ 7710  continue
 
       write(121,'(1x,35A)') ' chiiexp56    neo1   w/6      da15
      1w/ExB   thermin  '
@@ -5153,7 +5154,7 @@ c**************************************************************************
         write(121,1000) xchii(n),chich(n),chichos(n),chida0(n),chida(n),
      1  chithi(n)
 
-772   continue
+ 772   continue
 
       write(121,'(1x,35A)')' chiiexp56  itg8      itg8&23    itg8&24   i
      1tg20    itg20&23  itg20&24  elect31  '
@@ -5163,7 +5164,7 @@ c**************************************************************************
       do 7721 n = 1, 25
         write(121,1000) xchii3(n),chietair0(n),chietair1(n),chietair2(n),
      1               chietaiw0(n),chietaiw1(n),chietaiw2(n),chithe(n)
-7721  continue
+ 7721  continue
       write(121,'(1x,35A)')' chiiexpe60 itg9a    it9a&23   itg9a&24  itg
      19b    itg9b&23   itg9b&24 '
       write(121,'(1x,35A)')' chii orb25 horton#1  w/ExB    wExB&dqdr ho
@@ -5172,7 +5173,7 @@ c**************************************************************************
       do 7722 n = 1, 25
         write(121,1000) xchii2(n),chietaih0(n),chietaih1(n),chietaih2(n),
      1  chietai2h0(n),chietai2h1(n),chietai2h2(n)
-7722  continue
+ 7722  continue
       write(121,'(1x,35A)') ' chieexp56 chiepal32 chiepal35  temwesson w
      2ExB&dqdr tem43     tem43&47      '
       write(121,'(1x,35A)') ' conduct q formula   powerbal   wesson  w/E
@@ -5180,7 +5181,7 @@ c**************************************************************************
       do 773, n= 1,25
         write(121,1000) xchie(n),chiepale(n),chiepale4(n),chitemw0(n),
      1  chitemw(n),chitemk0(n),chitemk(n)
-773   continue
+ 773   continue
       write(121,'(1x,35A)')'  chieorb   drb48   drb48&50  drb48&51  et
      1g39    etg39&41    etg42   etg42&41  '
       write(121,'(1x,35A)')'  total Q     resbal  w/ExB     wExB&dqdr we
@@ -5191,7 +5192,7 @@ c**************************************************************************
         chierb2= chierb(n)/ss**1.8
         write(121,1000) xchieorb(n),chierb0(n),chierb(n),chierb2,
      1  chieetg0(n),chieetg1(n),chieetg2(n),chieetg(n)
-7731  continue
+ 7731  continue
 
       write(121,'(1x,35A)') ' omexb     fsitg      fsetg      fsdrb
      1fsda   etgRLcrit   itgRLcrit ysitg'
@@ -5201,7 +5202,7 @@ c**************************************************************************
       do 774, n=1,25
         write(121,1000) omexb(n),fsitg(n),fsetg(n),fsdrb(n),fsda(n),
      1  critetg(n),crititg(n),ysitg(n)
-774   continue
+ 774   continue
       write(121,'(1x,35A)')' etai/thresh etai   etaithresh  gamitg
      1gamtem   omreal   itg12b    tem44   '
 
@@ -5209,7 +5210,7 @@ c**************************************************************************
         write(121,1000) etai(n)/etaithresh(n),etai(n),
      1    etaithresh(n),gamitg(n),gamtem(n),omreali(n),chietaiw9(n),
      2  chitemw9(n)
-7745  continue
+ 7745  continue
       write(121,'(1x,35A)')'  itg12b  itg12b&23  itg12b&24  tem44
      1tem44&46  tem44&47  itg12a '
       do 7746 n=1,25
@@ -5222,7 +5223,7 @@ c**************************************************************************
         chieweil2 = chieweil1/(ss**1.8)
         write(121,1000) chiiweil0,chiiweil1,chiiweil2,chieweil0,chieweil1,
      1  chieweil2,chiitgx(n)
-7746  continue
+ 7746  continue
 c     write(121,'(1x,35A)') ' alphaion  chii(k+L)  omegi     alphael  chie
 c     1(k+L)  eflux  fluxpal'
 c     do 774, n=1,25
@@ -5241,7 +5242,7 @@ c774  continue
         write (121,1000) rhor(n),chiedw0(n),chiedw1(n),chiedw2(n),
      1    etai(n),etae(n)
 
-775   continue
+ 775   continue
       write(121,'(1x,35A)') '   rho     thetion     thetimp     G   VTHE
      1TA1calc VTH1cor  vthet2 '
 
@@ -5249,7 +5250,7 @@ c774  continue
 
         write (121,1000) rhor(n),thetwid1(n),thetwid2(n),gy(n),
      1  velthet1(n), vth1cor(n), velthet2(n)
-780   continue
+ 780   continue
 
       write(121,'(1x,35A)') '   rho      beam      ephi      drag
      1 fric   vpinch2  '
@@ -5261,7 +5262,7 @@ c774  continue
         vp2 = zbeam - ephia/bthet+zdrag+zfrict
         xnuc12(n) = xnuc120(n)
         write (121,1000) rhor(n),zbeam,-1.*ephia/bthet,zdrag, zfrict,vp2
-787   continue
+ 787   continue
 
       write(121,'(1x,35A)') '   rho      beam      ephi      drag
      1 fric   vpinch3  '
@@ -5279,7 +5280,7 @@ c774  continue
         write (121,1000) rhor(n),zbeam,-1.*ephia/bthet,zdrag, zfrict,vp3
 
 
-785   continue
+ 785   continue
       write(121,'(1x,35A)') '   rho    beam&ephi  erad      vpol
      1vphi    vpinch4  '
       do 7860 n = 1,25
@@ -5296,7 +5297,7 @@ c774  continue
 
         write (121,1000) rhor(n),zbeam-1.*ephia/bthet,eradterm, vtheterm,
      1  vphiterm,vp4
-7860  continue
+ 7860  continue
 
 
       write(121,'(1x,35A)') '   rho    beam&ephi    erad      vpol
@@ -5316,7 +5317,7 @@ c774  continue
 
         write (121,1000) rhor(n),zbeam-1.*ephia/bthet,eradterm,polterm,
      1  vphiterm,vp5
-786   continue
+ 786   continue
 
       write(121,'(1x,35A)') '   RHO      EXD11     EXD22     EXD31
      1EXD41    EXD51    EXD53   '
@@ -5324,14 +5325,14 @@ c774  continue
       DO 7711 N = 1,25
         WRITE(121,1000) RHOR(N),EXD11(N),EXD22(N),EXD31(N),EXD41(N),
      1  EXD51(N),EXD53(N)
-7711  CONTINUE
+ 7711  CONTINUE
       write(121,'(1x,35A)') '   rho     vpinch2    vpinch3   vpinch4
      1 vpinch5  vtherm'
       do 7712 n= 1, 25
         VTHerm = SQRT(2.*XK*TI(N)/XMAS(1))
         write(121,1000)rhor(n),vpinch2(n),vpinch3(n),vpinch4(n),vpinch5(n)
      1  ,vtherm
-7712  continue
+ 7712  continue
 
       write(121,'(1x,35A)') '   rho      Bvphi     -Bvthet  press
      1  eradfb2  eradex  '
@@ -5351,26 +5352,26 @@ c     1     bthet*press(2),eradfb2(n),erex(n)
 
 
 
-790   continue
+ 790   continue
       write(121,'(1x,35A)') '   rho     vthet1     vthet2      vthexp
      1eradnew  eradexp   vthet3'
       do 795 n = 1,25
         write (121,1000) rhor(n),velthet1(n), velthet2(n),vthexp(n),
      1  eradfbnew(n),erex(n),velthet3(n)
-795   continue
+ 795   continue
       write(121,'(1x,35A)') '   rho     vpol61     vpol62      vthexp
      1   vthet3'
       do 7951 n = 1,25
         write (121,1000) rhor(n),vpol61(n), vpol62(n),vthexp(n),
      1  velthet3(n)
-7951  continue
+ 7951  continue
 
       write(121,'(1x,35A)') '   rho     vtheory     Wminx2     Wminx
      1eradav   erexp    ephi  '
       do 7966 n = 1,25
         write (121,1000) rhor(n),vtheory(n), Wminx2(n), Wminx(n),erav(n),
      2  erex(n),ephi(n)
-7966  continue
+ 7966  continue
 
       write (121,'(1x,35a)') '   rho     xlossn    xlosse    partloss
      2 energyloss       '
@@ -5378,56 +5379,56 @@ c     1     bthet*press(2),eradfb2(n),erex(n)
       xlosspow = 0.0
       do 799 n = 1,25
         write (121,1000) rhor(n),xlossn(n),xlosse(n),partloss,energyloss
-799   continue
+ 799   continue
       write (121,1023) xlossion,xlosspow
-1023  format (5x,"ion X-loss =",1x, e10.3,5x, "power X-loss =",1x,e10.3)
+ 1023  format (5x,"ion X-loss =",1x, e10.3,5x, "power X-loss =",1x,e10.3)
 
       write (121,'(1x,35a)') '  omegi0    omegic    omegis    omefz0
      1omegzc    omegzs  '
       do 805 n = 1,25
         write (121,1000) omegt(n,1),omegt(n,2),omegt(n,3),omegt(n,4),
      1         omegt(n,5), omegt(n,6)
-805   continue
+ 805   continue
       WRITE (121,'(1X,35A)')'  rho    vphiSIN      VphiCOS     nsin
      1  nCOS  '
       DO 806, N=1,25
         WRITE (121,1000) rhor(n), vphisin(n,1),vphicos(n,1),sinion(n),
      1  cosion(n)
-806   CONTINUE
+ 806   CONTINUE
 
       WRITE (121,'(1X,35A)')'  VTH1      VTHTSIN  VTHTCOS  VTHTCOSZ   VT
      1HTSINZ    VTH2     vth2exp'
       DO 810, N=1,25
         WRITE (121,1000) Vpol(1,N),VTHTSIN(1,N),VTHTCOS(1,N),
      1     VTHTCOS(2,N),VTHTSIN(2,N),Vpol(2,N),vthexp(n)
-810   CONTINUE
+ 810   CONTINUE
       WRITE(121,'(1X,35A)')'  rho      vphi1      vphi2   vphi1intr   vp
      1hi2intr, vphi1cor  vphi2cor  '
       do 812 n= 1,24
         x = vtor1(n)-yy1(n)
         y = vtor2(n)-yy2(n)
         write (121,1000) rhor(n),vtor1(n),vtor2(n),yy1(n),YY2(n),x,y
-812   continue
+ 812   continue
       write(121,'(1x,35a)')'  SV1      SV2         SV3       SV4
      1 SV5      SV6    brack'
       DO 815, N=1,25
         WRITE(121,1000) S0V(1,N),S0V(2,N),S0V(3,N),S0V(4,N),S0V(5,N),
      1  S0V(6,N),brack(n)
-815   CONTINUE
+ 815   CONTINUE
       WRITE(121,'(1X,35A)')'  rho      vphi1      vphi2   vphi2ex     vp
      1hi1ex, nustar-iz  nustar-zi'
 
       DO 820, N=1,25
         do 816 j=1,2
           VTH(J) = SQRT(2.*XK*TI(N)/XMAS(J))
-816     continue
+ 816     continue
         xxxiz = xnuc12(n)*rmajor*qsafe/vth(1)
         xxxzi = xnuc21(n)*rmajor*qsafe/vth(2)
 
         WRITE(121,1000)rhor(n),vtor1(N),vtor2(N),torv(N),vphiex1(n),
      1  xxxiz,xxxzi
 
-820   CONTINUE
+ 820   CONTINUE
 
       WRITE(121,'(1X,35A)')'  BV11      BV12     BV13      BV14
      1 BV15    bv16    xnuiI  '
@@ -5436,14 +5437,14 @@ c     1     bthet*press(2),eradfb2(n),erex(n)
         toromega = torv(n)/rmajor
         WRITE(121,1000) B0V(1,1,N),B0V(1,2,N),B0V(1,3,N),B0V(1,4,N),
      1  B0V(1,5,n),b0v(1,6,n),xnuc12(n)
-825   CONTINUE
+ 825   CONTINUE
 
       WRITE(121,'(1X,35A)')'  rho       potential  vt1HS      vt2HS
      1vt1SS    vt2SS    vtexp     vt1HS* '
       do 8260 n = 1,25
         write(121,1000) rhor(n),epota(n),vths1(n),vths2(n),velthet1(n),
      1  velthet2(n),vthexp(n),vpolhs(n)
-8260  continue
+ 8260  continue
 
 c           goto 1559
       do 827 jj = 1,1
@@ -5482,24 +5483,24 @@ c     if(yni(n,1).gt.2.e20) yni(n,1) = 2.e20
           yni(n,2) = fracz*yni(n,1)
           yne = yni(n,1)*atnum(1)+yni(n,2)*zbar2(n)
           znec(n) = yne
-826     continue
+ 826     continue
         write(121,'(1x,35A)')'  rho       nicalc     necalc    neexp   vpi
      1nch     vrad         D       xnu12     '
         do 8261 n = 1,25
           write(121,1000) rhor(n), yni(n,1), znec(n), exne(n),vpinchi(n),
      1    vrad1(n), exd11(n), xnuc12(n)
-8261    continue
+ 8261    continue
         write(*,*) 'call neutdist2'
         call neutdist
-827   continue
+ 827   continue
       WRITE(121,'(1X,35A)')'  rho       vpinch     vrad1    xlpmom
      2 xlpmex   Diff  '
       do 8255 n = 1, 25
         write(121,1000) rhor(n), vpinch4(n), vrad1(n),xlpmom(n),xlpm(n),
      2  diffA(n)
-8255  Continue
+ 8255  Continue
 
-1559  continue
+ 1559  continue
 c     *******************temporary*********************************
       goto 4099
 
@@ -5507,7 +5508,7 @@ c     *******************temporary*********************************
 
         toromega = torv(n)/rmajor
         WRITE(121,1000) rhor(N),vpinchi(N),xlpm(N),zne(n),yno(n),toromega
-828   CONTINUE
+ 828   CONTINUE
 c     nudrags from ndrag=3 pert analysis, first nu0, assuming delvphi=0,
 c     then estimate delvphi_0 and recalculate nudrag 1&2.
 c     nugyros from calculate vpol, vph_main = vphi_impex + delphi_0
@@ -5516,42 +5517,42 @@ c     nugyros from calculate vpol, vph_main = vphi_impex + delphi_0
       do 829 n = 1, 25
         write(121,1000) xnudtot1(n),xnudtot2(n),xnudzero(n),vtor2(n),
      1  vtor1(n),xnudragyro1(n),xnudragyro2(n)
-829   continue
+ 829   continue
 c     calculate vthetas using vphis above, then recal using also vthet2exp
       write (121,'(1x,35A)')'vthexp_impvthcal_impvthcal_main vpcal_imp
      1vpcal_main vpolHS_main vpolHS_imp'
       do 830 n = 1, 25
         write (121,1000) vthexp(n),velthet2(n),velthet1(n),vpcal2(n),
      1  vpcal1(n),vths1(n),vths2(n)
-830   continue
+ 830   continue
 c     vphis & nudrags from 6/25/07 quadratic eq sol for vphi_impex
       write (121,'(1x,35A)') '  vtkdg1  vtkdg2 vphi_imp  vphi_main1
      1vphi_main2  xnuatom  epota'
       do 831 n = 1,25
         write (121,1000) vtkdg1(n),vtkdg2(n),vftor2(n),vftor1(n),
      1  vftor0(n), xnuati(n)+xnuioni(n)+xnuionb(n),epota(n)
-831   continue
+ 831   continue
 c     6/26/07 insert above solving pol mom eq using f_imp collisional and V_impex
       write (121,'(1x,35A)')' fpol_main  vpol_main  vpol_imp fpol_col  f
      1pol_shaing fimp_shaing '
       do 832 n = 1,25
         write (121,1000) fpol_main(n),vpol_main(n),vpol_imp(n),fpol_col(n)
      1  ,   fpol_shaing(n),fpol_imp(n)
-832   continue
+ 832   continue
 c     option #2 solution quadratic eqs for fpol_main and vpol_main
       write(121,'(1x,35A)')'   fpol+    fpol-   fpol_col    fpol_shaing
      1vpol+    vpol-     vpolimp  '
       do 833 n = 1, 25
         write (121,1000) fpol1(n),fpol2(n),fpol_col(n),fpol_shaing(n),
      1  vpol3(n),vpol4(n),vpol_imp(n)
-833   continue
+ 833   continue
 c     option #3 solve for vj and vk using fshaing for each j and k
       write (121,'(1x,35A)')'  vpol_ion   vpol_imp  fshaing_imp  press1
      1   press2  '
       do 834 n = 1, 25
         write (121,1000) vpol5(n),vpol6(n),fpolimp_shaing(n),press1(n),
      1  press2(n)
-834   continue
+ 834   continue
       WRITE(121,'(1X,35A)')'  cospot   sinpot    potential   ephi/T
      1av15  av16  '
 
@@ -5559,13 +5560,13 @@ c     option #3 solve for vj and vk using fshaing for each j and k
         toromega = torv(n)/rmajor
         WRITE(121,1000) cpot(n),spot(n),estatpot(n),estatpot(n)/xte(n),
      1  av(1,5,n),av(1,6,n)
-835   CONTINUE
+ 835   CONTINUE
       WRITE(121,'(1X,35A)')'  sinion   cosion   vthtsin     vthtcos
      1vphisin   vphicos  '
       DO 840, N=1,25
         WRITE(121,1000) sinion(n),cosion(n),vthtsin(1,n),vthtcos(1,n),
      1  vphisin(1,n),vphicos(1,n)
-840   CONTINUE
+ 840   CONTINUE
 
       WRITE(121,'(1X,35A)')'  rho      torvel1    torvel2   vphi2ex   vp
      1hi1ex   veltor1    veltor2  vtherm1  '
@@ -5573,40 +5574,40 @@ c     option #3 solve for vj and vk using fshaing for each j and k
       DO 845, N=1,25
         do 841 j=1,2
           VTH(J) = SQRT(2.*XK*TI(N)/XMAS(J))
-841     continue
+ 841     continue
 
 
         WRITE(121,1000)rhor(n),torvel(N,1),torvel(N,2),torv(N),vphiex1(n),
      1  veltor(n,1),veltor(n,2), vth(1)
 
-845   CONTINUE
+ 845   CONTINUE
       WRITE(121,'(1X,35A)')'  rho      chiphi1    chiphi2   nudragp1
      1nudragp2, nuinert1    nuinert2'
 
       DO 850, N=1,25
         do 846 j=1,2
           VTH(J) = SQRT(2.*XK*TI(N)/XMAS(J))
-846     continue
+ 846     continue
 
 
         WRITE(121,1000)xlpm(n),chiphi(N,1),chiphi(N,2),xnudragp(N,1),
      1  xnudragp(n,2), ynuinert(n,1),ynuinert(n,2)
 
-850   CONTINUE
+ 850   CONTINUE
       WRITE(121,'(1X,35A)')'   RHO      A1        A2        SPOLA
      1SPOLB        S2        S1  '
       DO 855 N=1,25
         WRITE(121,1000)RHOR(N),APOL1(N),APOL2(N),SPOLA(N,2),SPOLB(N,2),
      1  SPOL2(N),SPOL1(N)
-855   CONTINUE
+ 855   CONTINUE
 
       write(121,1005) chixpi,chixpe,chitop,chetop
 
       write(121,1006) ylti,ylte,xltitop,xltetop
-1000  format(9e10.3)
-1005  format(1x,'chixpi=',f5.2,1x,'chixpe=',f5.2,1x,'chitop=',f5.2,1x,
+ 1000  format(9e10.3)
+ 1005  format(1x,'chixpi=',f5.2,1x,'chixpe=',f5.2,1x,'chitop=',f5.2,1x,
      1'chetop=',f5.2)
-1006  format(1x,'ylti=',f6.3,1x,'ylte=',f6.3,1x,'xltitop=',f6.3,
+ 1006  format(1x,'ylti=',f6.3,1x,'ylte=',f6.3,1x,'xltitop=',f6.3,
      11x,'xltetop=',f6.3)
 
 C**********************************************************************
@@ -5701,7 +5702,7 @@ c     rhor(25) = 1.0
         TEED(N) = TEl(N)
         TIED(N) = TI(N)
 
-1003  CONTINUE
+ 1003  CONTINUE
 
 
       vtor1old(25) = torv(25)
@@ -5709,8 +5710,8 @@ c     *****************************************
 
 c     "Outer" iteration converging velocity calculations & density calculations
 c           through 3000
-1004  kk=0
-1007  do 3000 jt = 1,1
+ 1004  kk=0
+ 1007  do 3000 jt = 1,1
         mjt = 0
         CALL NEUTDIST
 
@@ -5718,7 +5719,7 @@ c     ***********end control section****************************************
 
 c     *****"Inner" iteration converging ion and neutral distributions through 2000******
 
-1500    DO 2000 IT = 1,1
+ 1500    DO 2000 IT = 1,1
           XNUIONI(25) = YNO(25)*SVIONA(25)
           XNUATI(25) =  YNOCOLD(25)*SVATA(25)
           XNUDRAGATOMIC(25) = 0.5*(XNUIONI(25)+xnuioni(24)) +
@@ -5737,11 +5738,11 @@ c    1            (delna*(omegt(n,1)+omegt(n-1,1)))
             velthet1old(n) = velthet1(n)
             velthet2old(n) = velthet2(n)
             eradaold(n) = erada(n)
-1010      continue
+ 1010      continue
           do 1025 n = 1,25
             ynold(n) = yno(n)
             yniold(n) = yni(n,1)
-1025      continue
+ 1025      continue
 c     impurity radiation & average charge
           TDBL = 0.5*(Tel(24)+tel(25))
           eTDBL = 0.5*(Tel(24)+tel(25))
@@ -5761,7 +5762,7 @@ c     yni(25,2)=fracz*yni(25,1)
           endif
 
           CALL cefits (IZ1, TDBL, XLZDBL, 1, DLZDBL)
-1028      XLradZ(25)= eXLZDBL
+ 1028      XLradZ(25)= eXLZDBL
 
 c           CONVERT FROM ERG-CM3/EV-S TO J-M3/S
           XLradZ(25) = XLradZ(25)*1.e-13
@@ -5805,7 +5806,7 @@ c     velthet2(25) = vtheta(2)
             xz = atnum(1)
             if(j.eq.2) xz = zbar2(25)
             PRESS(J)=-1.*(ti(25)/(xz*BTHET))*xlpm(25)
-808       continue
+ 808       continue
 
           eradfb(25) = bthet*(torv(25) - vtheta(2)/fp + press(2))
 
@@ -5921,7 +5922,7 @@ c     zbar2(n) = 6.0
             endif
 
             CALL cefits (IZ1, TDBL, XLZDBL, 1, DLZDBL)
-1054        XLradZ(n)= eXLZDBL
+ 1054        XLradZ(n)= eXLZDBL
 
 c           CONVERT FROM ERG-CM3/EV-S TO J-M3/S
             XLradZ(n) = XLradZ(n)*1.e-13
@@ -5958,7 +5959,7 @@ c     particle fluxes on ions & impurities
               xz = atnum(1)
               if(j.eq.2) xz = zbar2(n)
               PRESS(J)=-1.*(ti(n)/(xz*BTHET))*xlpm(n)
-908         continue
+ 908         continue
 
             eradfb(n) = bthet*(torv(n) - vtheta(2)/fp + press(2))
 
@@ -5996,7 +5997,7 @@ c     time dependent
 c     gamheati(n) = gamheati(n)-dlnwi_dt(n)*1.5*yni(n,1)*xk*ti(n)*delma
 c     gamheate(n) = gamheate(n)-dlnwe_dt(n)*1.5*yne*xk*tel(n)*delma
 c     gamion(n,1) = gamion(n,1)-dlnn_dt(n)*yni(n,1)*delma
-1001      continue
+ 1001      continue
 c     adjustment to surface flux boundary conditions
 c     to account for time-dependent n and nT in pedestal
           ye=0.
@@ -6015,7 +6016,7 @@ c     set time derivatives to input profile values data20
             yi = yi + dlnpiped_dt*1.5*yni(n,1)*xk*ti(n)*delma
             dlnnped_dt = dlnn_dt(n)-dln_dt
             yn = yn + dlnnped_dt*yni(n,1)*delma
-1776      continue
+ 1776      continue
 c*****changed 6-22-07 end ***************
 
 c     adjust heat & particle flux for change in boundary conditions
@@ -6023,7 +6024,7 @@ c     adjust heat & particle flux for change in boundary conditions
             gamheati(n) = gamheati(n) - yi
             gamheate(n) = gamheate(n) - ye
             gamion(n,1) = gamion(n,1) - yn
-1777      continue
+ 1777      continue
           do 1013 n=1,25
             vrad1(n) = gamion(n,1)/yni(n,1)
 c*******************
@@ -6060,7 +6061,7 @@ c     if(xlpm(n).lt.0.0) xlpm(n) = xltim(n)
             xlnmold = xlnm(n)
             xlnm(n) = xlpm(n)-c10*xltim(n)
 c     if(xlnm(n).lt.0.0) xlnm(n) = 0.0
-1013      continue
+ 1013      continue
 c     integrate ion density inward from separatrix
           c6 = 0.5
           yni(25,1) = exne(25)/(atnum(1)+fracz*zbar2(25))
@@ -6119,7 +6120,7 @@ c1159 CONTINUE
 c1164 continue
 
 
-1014      CONTINUE
+ 1014      CONTINUE
 
           call neutdist
 
@@ -6131,7 +6132,7 @@ c     converge on main ion density and temp
 
             IF(YNI(N,1).LE.0.0) YNI(N,1) = 1.E19
             IF(YNI(N,2).LE.0.0) YNI(N,2) = 1.E19*fracz
-1170      continue
+ 1170      continue
           iF(MIT.EQ.0) GOTO 1225
 
           nj = 50
@@ -6141,10 +6142,10 @@ c     converge on main ion density and temp
             jwarn = 1
             goto 1225
           endif
-1199      format(1x,'not converged on 2000 loop after iterations=',I3.0)
-2000    CONTINUE
+ 1199      format(1x,'not converged on 2000 loop after iterations=',I3.0)
+ 2000    CONTINUE
 
-1225    continue
+ 1225    continue
 c     converge on poloidal velocities ********************
 
 c*********************************************************************************
@@ -6160,17 +6161,17 @@ c*******************************************************************************
           velthet1old(n) = velthet1(n)
           velthet2old(n) = velthet2(n)
 
-1275    continue
+ 1275    continue
 
         if(mjt.ne.0) goto 1298
 
         goto 1301
 
-1298    continue
+ 1298    continue
 
-3000  continue
+ 3000  continue
 
-1301  continue
+ 1301  continue
       OPEN(unit=123,FILE='pedestal2.TXT',STATUS='UNKNOWN')
       if(jwarn.eq.1) write(123,199)
 
@@ -6184,21 +6185,21 @@ c     sepdif = xnsepex - xnesepreal
         write (123,1000) rhor(n),zne(n),ti(n),tel(n),vrad1(n),vpinchi(n),
      1  xlpm(n)
 
-3750  continue
+ 3750  continue
       write(123,'(1x,35A)') '   rho     nudrag1*    nuatom1   nudrag2*
      1nugyro1  nugyro2  gamion  '
       do 3760 n = 1,25
         write (123,1000) rhor(n),xnudtot1(n),xnuati(n)+xnuioni(n)+xnuionb(
      1  n),xnudtot2(n),xnudragyro1(n),xnudragyro2(n),gamion(n,1)
         dragfreq(n) = xnudtot1(n)
-3760  continue
+ 3760  continue
       write(123,'(1x,35A)') '   rho  -(dp/dr)/p -(dTi/dr)/T -(dn/dr)/n
      1-(dTe/dr)/T  xnuion  qnbi '
 
       do 3770 n=1,25
         write (123,1000) rhor(n),xlpm(n),xltim(n),xlnm(n),
      1  xltem(n),ynuion(n),qnbi(n)
-3770  continue
+ 3770  continue
 
       write(123,'(1x,35A)') '   rho     cosion    cosimp    sinion
      1 sinimp       beta-1    beta-2  '
@@ -6209,27 +6210,27 @@ c     sepdif = xnsepex - xnesepreal
 
         write (123,1000) rhor(n),cosion(n),cosimp(n),sinion(n),sinimp(n),
      1    ynud(1),ynud(2)
-3775  continue
+ 3775  continue
       write(123,'(1x,35A)') '   rho     vthet1     vthet2      vthexp
      1eradfb  eradexp'
       do 3795 n = 1,25
         write (123,1000) rhor(n),velthet1(n), velthet2(n),vthexp(n),
      1  eradfb(n),erex(n)
-3795  continue
+ 3795  continue
       WRITE(123,'(1X,35A)')'  rho      vphi1      vphi2   vphi2ex     vp
      1hi1ex, nustar-iz  nustar-zi'
 
       DO 3820, N=1,25
         do 3816 j=1,2
           VTH(J) = SQRT(2.*XK*TI(N)/XMAS(J))
-3816    continue
+ 3816    continue
         xxxiz = xnuc12(n)*rmajor*qsafe/vth(1)
         xxxzi = xnuc21(n)*rmajor*qsafe/vth(2)
 
         WRITE(123,1000)rhor(n),vtor1(N),vtor2(N),torv(N),vphiex1(n),
      1  xxxiz,xxxzi
 
-3820  CONTINUE
+ 3820  CONTINUE
       write(123,'(1x,35A)') '   rho    gamheate    gamheati   gamion
      1 econve    econvi  gamconvi  '
       do 3755 n = 1,25
@@ -6237,8 +6238,8 @@ c     sepdif = xnsepex - xnesepreal
 
         write (123,1000) rhor(n),gamheate(n),gamheati(n),gamion(n,1),
      1  econve(n),econvi(n),gamconvi
-3755  continue
+ 3755  continue
 
-4099  RETURN
+ 4099  RETURN
 
       END

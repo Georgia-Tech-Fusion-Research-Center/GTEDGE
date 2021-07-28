@@ -49,7 +49,7 @@ c/    ------------------------------------
 
       call qgauss_10 (t_ij, 0.0, L_i, ss)
       Tij = 2.0 * ss / (pi*Li)
-	  
+        
       return
       end
 
@@ -85,8 +85,8 @@ c/    ----------------------------------------------------
       sinth = sin (theta_ij)
 
       if (i_geom.EQ.1) then
-	 phi_min = atan (tanth / (1.0 - x * tanth / (L_j * sinth)))
-	 phi_max = pi
+       phi_min = atan (tanth / (1.0 - x * tanth / (L_j * sinth)))
+       phi_max = pi
 
       else if (i_geom.EQ.2) then
 
@@ -102,18 +102,18 @@ c/    ----------------------------------------------------
       if (phi_max.LT.0.0) phi_max = pi + phi_max
 
       d_phi = (phi_max - phi_min) / float (nph_pnts - 1)
-	
+      
       do i = 1, nph_pnts
-	 phi = phi_min + (i-1) * d_phi
-	 if (i_geom.EQ.1) then
-	    el_of_phi = x * sinth / sin (phi - theta_ij)
-	 else
-	    ksi_j = ((L_perp / tan(theta_ij) - x) * tan (phi)-L_perp) /
+       phi = phi_min + (i-1) * d_phi
+       if (i_geom.EQ.1) then
+          el_of_phi = x * sinth / sin (phi - theta_ij)
+       else
+          ksi_j = ((L_perp / tan(theta_ij) - x) * tan (phi)-L_perp) /
      .         (sina - cosa * tan(phi))
-	    el_of_phi = (L_perp + ksi_j*sina)/ sin (phi)
-	 endif
+          el_of_phi = (L_perp + ksi_j*sina)/ sin (phi)
+       endif
 
-	 tvec(i) = sin (phi) * bickley (el_of_phi/l_mfp)
+       tvec(i) = sin (phi) * bickley (el_of_phi/l_mfp)
 
       enddo
 
